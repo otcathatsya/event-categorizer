@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "eventcat",
+  "version": "${version}",
+
+  "name": "Event Categorizer",
+  "description": "Avoid spreadsheet troubles",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/eventcat/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "at.cath.EventCategorizer"
+      }
+    ]
+  },
+  "mixins": [
+    "eventcat.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-language-kotlin": ">=${fabric_kotlin_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

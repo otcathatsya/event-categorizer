@@ -1,0 +1,5 @@
+{
+  "action.eventcat.store": "Memorize items in currently open chest",
+  "action.eventcat.check": "Highlight items in currently open chest",
+  "menu.eventcat.category": "Event Categorizer"
+}
