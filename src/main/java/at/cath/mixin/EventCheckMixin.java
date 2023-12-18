@@ -1,12 +1,12 @@
 package at.cath.mixin;
 
 import at.cath.EventCategorizer;
+import at.cath.EventItemStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Final;
@@ -49,14 +49,12 @@ public abstract class EventCheckMixin {
 
         for (int i = 0; i < handler.slots.size(); ++i) {
             final Slot slot = handler.slots.get(i);
-            final ItemStack targetStack = slot.getStack();
+            final ItemStack stack = slot.getStack();
 
-            if (targetStack.isEmpty() || targetStack.getNbt() == null)
+            if (stack.isEmpty() || stack.getNbt() == null)
                 continue;
 
-            final NbtCompound nbt = targetStack.getNbt();
-
-            if (INSTANCE.getEventItems().contains(nbt)) {
+            if (INSTANCE.getEventItems().contains(new EventItemStack(stack.getItem(), stack.getNbt()))) {
                 context.fillGradient(RenderLayer.getGuiOverlay(), slot.x, slot.y, slot.x + 16, slot.y + 16, HIGHLIGHT, HIGHLIGHT, 0);
             }
         }
@@ -75,13 +73,13 @@ public abstract class EventCheckMixin {
             if (stack.isEmpty() || stack.getNbt() == null)
                 return;
 
-            final Set<NbtCompound> eventItems = INSTANCE.getEventItems();
+            final Set<EventItemStack> eventItems = INSTANCE.getEventItems();
 
-            final NbtCompound nbt = stack.getNbt();
-            if (eventItems.contains(nbt)) {
-                eventItems.remove(nbt);
+            final EventItemStack eventStack = new EventItemStack(stack.getItem(), stack.getNbt());
+            if (eventItems.contains(eventStack)) {
+                eventItems.remove(eventStack);
             } else {
-                eventItems.add(nbt);
+                eventItems.add(eventStack);
             }
         }
     }
